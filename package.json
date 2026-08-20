@@ -1,0 +1,48 @@
+{
+  "name": "api-tn-campagne",
+  "version": "0.0.1",
+  "description": "API des campagnes de la Team Niintche",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "api",
+    "team",
+    "niintche",
+    "ecole",
+    "engagement",
+    "communautaire",
+    "volontariat",
+    "benevolat",
+    "eleve",
+    "classe",
+    "kit",
+    "arbre",
+    "don"
+  ],
+  "author": "@teamNiintche",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "heroku": "^9.5.1",
+    "heroku-cli": "^7.0.9",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
+    "pg": "^8.13.1",
+    "psql": "^0.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "sequelize": "^6.37.4",
+    "socket.io": "^4.8.1",
+    "whatsapp-web.js": "^1.26.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "sequelize-cli": "^6.6.5"
+  }
+}

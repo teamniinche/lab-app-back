@@ -39,7 +39,7 @@ var PORT=process.env.PORT || 8081;
 // Intancier express
 var server=express();
 var sServer=http.createServer(server);
-const allowedOrigins = ["http://localhost:8080","http://172.28.112.1:8080","http://localhost:80","http://172.28.112.1:80"]  // Votre propre port API si le client y est hébergé;
+const allowedOrigins = ["http://localhost:80","http://172.28.112.1:80"]  // Votre propre port API si le client y est hébergé;
 const corsOptions={
     // origin: '*', // Permet toutes les origines, mais tu peux restreindre à une origine spécifique
     origin:function (origin, callback) {

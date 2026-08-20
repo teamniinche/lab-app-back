@@ -16,8 +16,8 @@
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
+        "require": false /*,à defaut de ne pouvoir resoudre le bug sur le "not support ssl connections" au demarrage du container
+        "rejectUnauthorized": false */
       }
     }
   }

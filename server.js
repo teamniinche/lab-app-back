@@ -49,7 +49,7 @@ const corsOptions={
             if (allowedOrigins.indexOf(origin) !== -1) {
                 callback(null, true);
             } else {
-                callback(new Error(origin+("http://172.28.112.1"===origin)+' Bloqué par la politique CORS : Origine non autorisée.'));
+                callback(new Error(origin+allowedOrigins.indexOf(origin)+' Bloqué par la politique CORS : Origine non autorisée.'));
             }
         },
     // allowedOrigins, // Permet toutes les origines, mais tu peux restreindre � une origine sp�cifique

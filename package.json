@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "push":"git status && git add * && git commit -m 'commit auto' && git push origin main"
+    "push":"git status && git add * && git commit -m 'commitauto' && git push origin main"
   },
   "keywords": [
     "api",

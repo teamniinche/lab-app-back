@@ -39,7 +39,13 @@ RUN npm install
 COPY . .
 
 # Donner les accès au dossier à l'utilisateur de puppeteer
-RUN chown -R ${PPTR_USER}:${PPTR_USER} /usr/src/app
+# RUN chown -R ${PPTR_USER}:${PPTR_USER} /usr/src/app
+
+# 🔄 Remplace tes lignes COPY et RUN chown par ces trois lignes :
+COPY --chown=${PPTR_USER}:${PPTR_USER} package*.json ./
+RUN npm install
+COPY --chown=${PPTR_USER}:${PPTR_USER} . .
+
 
 # Repasser sur l'utilisateur sécurisé non-root de l'image
 USER ${PPTR_USER}

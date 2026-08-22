@@ -158,11 +158,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       ok: {
         type: DataTypes.JSONB,
-        allowNull: false,
-        defaultValue: {
-            status: false,
-            validation: null
-        }
+        allowNull: true,
+        defaultValue: null
     }
     },
     {

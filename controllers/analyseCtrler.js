@@ -767,7 +767,8 @@ module.exports.analyseCtrler={
                                     return foundValidation.validation!=='Isolated' && models.Validation.update({
                                         ok:false,
                                         validation:"",
-                                        UtilisateurId:UtilisateurId
+                                        UtilisateurId:UtilisateurId,
+                                        AnalyseId:analyse.id,
                                         },
                                         {
                                             where:{id:foundValidation.id}

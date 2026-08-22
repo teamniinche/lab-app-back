@@ -184,9 +184,13 @@ const allAnalyses= async (req, res)=>{
         
             const lansas=await rows.filter(analyse=>analyse.type==="lansa");
             const formules=await rows.filter(analyse=>analyse.type==="fini");
+
+            console.log({lansas:lansas,formules:formules});
+
             return {lansas:lansas,formules:formules};
 
     } catch (error) {
+        console.log({lansas:[error.message],formules:[error.message]});
         return {lansas:[error.message],formules:[error.message]};
     }
 };

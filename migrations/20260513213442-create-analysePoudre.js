@@ -111,11 +111,8 @@ module.exports = {
       },
       ok: {
         type: Sequelize.JSONB,
-        allowNull: false,
-        defaultValue: {
-            status: false,
-            validation: null
-        }
+        allowNull: true,
+        defaultValue:null
     },
       UtilisateurId: {
         type: Sequelize.INTEGER,

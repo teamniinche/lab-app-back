@@ -244,7 +244,7 @@ module.exports.analyseCtrler={
             return createdAnalyse;
         })
         .then(function(createdAnalyse){
-            io.emit("analyseAdded", createdAnalyse);
+            // io.emit("analyseAdded", createdAnalyse);
             return res.status(201).json({
                 "id":createdAnalyse.id,
                 "code":"green",

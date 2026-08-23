@@ -86,12 +86,12 @@ function dates(date1,date2){
   
 // });
 
-var io; // Instance de socket.io
+// var io; // Instance de socket.io
 
-// Fonction pour initialiser socket.io
-module.exports.setSocketIo = function (socketIoInstance) {
-  io = socketIoInstance;
-};
+// // Fonction pour initialiser socket.io
+// module.exports.setSocketIo = function (socketIoInstance) {
+//   io = socketIoInstance;
+// };
 
 module.exports.actionsCtrler={
     add:function(req,res){

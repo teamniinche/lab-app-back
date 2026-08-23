@@ -1,9 +1,9 @@
 var models=require('../models');
 
-var io;
-module.exports.setSocketIoV = function (socketIoInstance) {
-    io = socketIoInstance;
-  };
+// var io;
+// module.exports.setSocketIoV = function (socketIoInstance) {
+//     io = socketIoInstance;
+//   };
 
 module.exports.validationCtrler={
     // add:function(obj){
@@ -34,9 +34,9 @@ module.exports.validationCtrler={
                 }
             }
             )
-            .then(function(){
-                io.emit('validated',{"code":"green","validation":validation});
-            })
+            // .then(function(){
+            //     io.emit('validated',{"code":"green","validation":validation});
+            // })
             .then(function(){
                 return res.status(200).json({
                     "code":"green",

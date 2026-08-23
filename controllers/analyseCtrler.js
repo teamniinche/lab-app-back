@@ -138,7 +138,7 @@ function willUpdate(term1,term2){
 
 module.exports.analyseCtrler={
     
-        allAnalyses:async function(req, res){
+    allAnalyses:async function(req, res){
         const startedAt= req.query.startedAt || startedAtDefault;
         const endedAt= req.query.endedAt || endedAtDefault;
         const {startDate,endDate}=dates(startedAt,endedAt);
@@ -239,7 +239,6 @@ module.exports.analyseCtrler={
             return createdAnalyse;
         })
         .then(function(createdAnalyse){
-            // io.emit("analyseAdded", createdAnalyse);
             return res.status(201).json({
                 "id":createdAnalyse.id,
                 "code":"green",
@@ -247,6 +246,7 @@ module.exports.analyseCtrler={
             })
         })
         .catch(function(error){
+            console.log(error);
             return res.status(500).json({"code":"red","message":"impossible d'enregistrer cette analyse ! "+error.message})
         })
     },

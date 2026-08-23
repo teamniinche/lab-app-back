@@ -246,7 +246,6 @@ module.exports.analyseCtrler={
             })
         })
         .catch(function(error){
-            console.log(error);
             return res.status(500).json({"code":"red","message":"impossible d'enregistrer cette analyse ! "+error.message})
         })
     },

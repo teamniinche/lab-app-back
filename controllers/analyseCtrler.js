@@ -234,12 +234,6 @@ module.exports.analyseCtrler={
                             UtilisateurId:UtilisateurId,
                             AnalyseId:createdAnalyse.id,
                         })
-                        // .then(()=>{
-                        //     sendToWhatsApp(
-                        //         '*** FROM LABOT *** : '+observations
-                        //     );
-                        //     return createdAnalyse
-                        // })
             }
             return createdAnalyse;
         })

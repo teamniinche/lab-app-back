@@ -234,7 +234,7 @@ module.exports.analyseCtrler={
                             validation:"",
                             UtilisateurId:UtilisateurId,
                             AnalyseId:createdAnalyse.id,
-                        })
+                        }).then(() => createdAnalyse); // ✨ ASTUCE : On fait suivre l'analyse originale !
             }
             return createdAnalyse;
         })

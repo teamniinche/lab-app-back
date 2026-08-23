@@ -23,6 +23,7 @@
  createdAt      | timestamp with time zone |                 | not null  | CURRENT_TIMESTAMP
  updatedAt      | timestamp with time zone |                 | not null  | CURRENT_TIMESTAMP
 */
+
 /*
  var machine=req.body.machine || null;
  var name=req.body.name || null;

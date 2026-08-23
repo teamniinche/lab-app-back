@@ -788,7 +788,7 @@ module.exports.analyseCtrler={
                     })    
                     })
                     .then(function(){
-                        io.emit("analyseUpdated", analyse);
+                        // io.emit("analyseUpdated", analyse);
                         return res.status(202).json({
                             "id":id,
                             "code":"green",//✅
@@ -832,7 +832,7 @@ module.exports.analyseCtrler={
                 })    
                 })
                 .then(function(){
-                    io.emit("analyseDeleted",analyseFound);
+                    // io.emit("analyseDeleted",analyseFound);
                     return res.status(203).json({
                         "code":"yellow",
                         "message":"L'analyse "+id+" deleted !"

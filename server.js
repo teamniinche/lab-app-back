@@ -52,7 +52,7 @@ const corsOptions={
     //             callback(new Error(origin+' Bloqué par la politique CORS : Origine non autorisée.'));
     //         }
     //     },
-    // // allowedOrigins, // Permet toutes les origines, mais tu peux restreindre � une origine sp�cifique
+    //// allowedOrigins, // Permet toutes les origines, mais tu peux restreindre � une origine sp�cifique
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization','X-Requested-With', 'Accept'],

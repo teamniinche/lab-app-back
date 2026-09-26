@@ -55,7 +55,7 @@ module.exports.validationPoudreCtrler={
                                                 if(foundValidation){
                                                     return models.ValidationPoudre.update({
                                                         ok:ok,
-                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action},...VALIDATION},
+                                                        validation:{...VALIDATION,[(Date.now()).toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         },
                                                         {
                                                             where:{id:foundValidation.id}
@@ -81,6 +81,12 @@ module.exports.validationPoudreCtrler={
                                                             })
                                             .then(function(){
                                                 return res.status(200).json({
+                                                    "validation":{
+                                                        ok:false,
+                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
+                                                        UtilisateurId:parseInt(UtilisateurId),
+                                                        AnalyseId:parseInt(id),
+                                                    },
                                                     "code":"green",
                                                     "message":"Action executed successfully"
                                                 })

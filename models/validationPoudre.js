@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         field: 'ok',
       },
       validation: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSONB,
         allowNull: true,
         field: 'validation',
       }

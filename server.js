@@ -31,6 +31,7 @@ var normesFormulesPoudreRouter = require('./routes/normesFormulesPoudreRouter').
 // var {setSocketIoPC} = require('./controllers/commentairePoudreCtrler.js');
 // var {setSocketIoU} = require('./controllers/utilisateurCtrler.js');
 
+
 var cors=require('cors')
 var {Server}=require('socket.io');
 var http=require('http');
@@ -77,90 +78,6 @@ server.use('/tn-api-campagne/poudre/validations',validationsPoudreRouter)
 server.use('/tn-api-campagne/poudre/normes', normesPoudreRouter)
 server.use('/tn-api-campagne/formules/normes', normesFormulesPoudreRouter)
 server.use('/tn-api-campagne/actions',actionRouter)
-
-// //======================= NORMES PRODUCTS LIQUIDES ++++++++++++++++++++++++++++++
-// server.post('/tn-api-campagne/update-normes', (req, res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     const newData = req.body;
-//     try {
-//         fs.writeFile('normes.json', JSON.stringify(newData, null, 2),()=>{console.log('Normes liquides bien modifié .');});
-//         return res.status(200).json({code:"green",data:newData,message: '✅ Normes updated' });
-//     } catch (error) {
-//         return res.status(500).json({code:"red",data:{},message: '❌ Update fail '+error.message });
-//     }
-// });
-// server.get('/tn-api-campagne/get-normes', (req,res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     try {
-//         const data = fs.readFileSync('normes.json');
-//         const normesJson = JSON.parse(data);
-//         return res.status(200).json({code:"green",data:normesJson});
-//     } catch (err) {
-//         return res.status(500).json({code:"red",data:{},errorMessage:err.message});
-//     }
-// });
-
-// // ========================== NORMES POUDRE LANSAS ==================================
-
-// server.post('/tn-api-campagne/poudre/update-normesLansas', (req, res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     const newData = req.body;
-//     try {
-//         fs.writeFile('normesPoudre.json', JSON.stringify(newData, null, 2),()=>{console.log('Normes lansas bien modifié .');});
-//         return res.status(200).json({code:"green",data:newData,message: '✅ Normes updated' });
-//     } catch (error) {
-//         return res.status(500).json({code:"red",data:{},message: '❌ Update fail '+error.message });
-//     }
-// });
-
-// server.get('/tn-api-campagne/poudre/get-normesLansas', (req,res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     try {
-//         const data = fs.readFileSync('normesPoudre.json');
-//         const normesJson = JSON.parse(data);
-//         return res.status(200).json({code:"green",data:normesJson});
-//     } catch (err) {
-//         return res.status(500).json({code:"red",data:{},errorMessage:err.message});
-//     }
-// });
-// server.get('/tn-api-campagne/poudre/get-normes', (req,res) => {
-//     try {
-//         const lansas = fs.readFileSync('normesPoudre.json');
-//         const lansasJson = JSON.parse(lansas);
-//         const formules = fs.readFileSync('normesFormules.json');
-//         const formulesJson = JSON.parse(formules);
-//         return res.status(200).json({code:"green",data:{lansas:lansasJson,formules:formulesJson}});
-//     } catch (err) {
-//         return res.status(500).json({code:"red",data:{},errorMessage:err.message});
-//     }
-// });
-
-
-// // ========================== NORMES FORMULES ==================================
-
-// server.post('/tn-api-campagne/poudre/update-normesFormules', (req, res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     const newData = req.body;
-//     try {
-//         fs.writeFile('normesFormules.json', JSON.stringify(newData, null, 2),()=>{console.log('Normes formules bien modifié .');});
-//         return res.status(200).json({code:"green",data:newData,message: '✅ Normes updated' });
-//     } catch (error) {
-//         return res.status(500).json({code:"red",data:{},message: '❌ Update fail '+error.message });
-//     }
-// });
-
-// server.get('/tn-api-campagne/poudre/get-normesFormules', (req,res) => {
-//     // const filePath = path.join(__dirname, 'normes.json');
-//     try {
-//         const data = fs.readFileSync('normesFormules.json');
-//         const normesJson = JSON.parse(data);
-//         return res.status(200).json({code:"green",data:normesJson});
-//     } catch (err) {
-//         return res.status(500).json({code:"red",data:{},errorMessage:err.message});
-//     }
-// });
-
-// ========================== NORMES JAVEL ==================================
 
 server.post('/tn-api-campagne/javel/update-normes', (req, res) => {
     // const filePath = path.join(__dirname, 'normes.json');

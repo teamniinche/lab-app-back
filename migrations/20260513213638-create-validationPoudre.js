@@ -14,9 +14,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      validation:{
-        type: Sequelize.STRING,
-        allowNull: false,
+      validation: {
+          type: Sequelize.JSONB,
+          allowNull: true,
+          defaultValue:null
       },
       UtilisateurId: {
         type: Sequelize.INTEGER,

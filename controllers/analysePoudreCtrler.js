@@ -53,8 +53,8 @@
  */
 const  models = require('../models');
 const { Op } = require("sequelize");
-const sendToWhatsApp=require('../whatsapp').sendToWhatsApp
-const {validationPoudreCtrler}=require("./validationPoudreCtrler");
+// const sendToWhatsApp=require('../whatsapp').sendToWhatsApp
+// const {validationPoudreCtrler}=require("./validationPoudreCtrler");
 const startedAtDefault='2025-04-01';
 const endedAtDefault='2100-12-31'
 const attributes=[
@@ -112,6 +112,14 @@ const includes=[
                           attributes:['id','ok','validation','updatedAt','createdAt'],
                         }
                   ];
+const Replace=(sj,ar)=>{var SJ=sj;
+  for (const el of ar) {SJ=SJ.replace(el[0],el[1]);}
+  return SJ;
+}
+function obsIsNull(obs){
+    const obsLenIsNull=obs && Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]).length===0;
+    return obsLenIsNull;
+}
 function dates(date1,date2){
     const date3 = new Date(date1); // Date de début
     const date4 = new Date(date2); // Date de fin
@@ -275,7 +283,7 @@ function Update(req,res,foundAnalyse){
                             percarbonate:willUpdate(parseFloat(percarbonate)||null,analyse.percarbonate),
 
                             mousses:willUpdate(mousses,analyse.mousses),
-                            observations:analyse.observations+" & "+observations,// willUpdate(observations,analyse.observations),
+                            observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
                             // UtilisateurId:analyse.UtilisateurId
                         },
                         {
@@ -293,7 +301,7 @@ function Update(req,res,foundAnalyse){
                 })    
                 })
                 .then(function(){
-                            if(observations!=='RAS'){
+                            if(!obsIsNull(observations)){
                                 models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
@@ -304,7 +312,7 @@ function Update(req,res,foundAnalyse){
                                     if(foundValidation){
                                         return foundValidation.validation!=='Isolated' && models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:"",
+                                            validation:null,
                                             UtilisateurId:UtilisateurId
                                             },
                                             {
@@ -354,7 +362,8 @@ function Add(req,res,newAnalyse){
      return new Promise((resolve,reject)=>
             models.AnalysePoudre.create(newAnalyse)
                 .then(function(createdAnalyse){
-                    if(createdAnalyse.observations!=="RAS"){
+                    const obs=createdAnalyse?.observations;
+                    if(!obsIsNull(obs)){
                         models.ValidationPoudre.create({
                                     ok:false,
                                     validation:"",

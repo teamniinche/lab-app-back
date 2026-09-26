@@ -81,12 +81,12 @@ module.exports.validationPoudreCtrler={
                                                             })
                                             .then(function(){
                                                 return res.status(200).json({
-                                                    "validation":JSON.stringify({
+                                                    "validation":{
                                                         ok:false,
                                                         validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         UtilisateurId:parseInt(UtilisateurId),
                                                         AnalyseId:parseInt(id),
-                                                    }),
+                                                    },
                                                     "code":"green",
                                                     "message":"Action executed successfully"
                                                 })

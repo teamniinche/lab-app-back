@@ -11,7 +11,6 @@ exports.router=(function(){
 
     validationPoudreRouter.route('/').get(validationPoudreCtrler.all); // get All items
 
-
 return validationPoudreRouter;
 
 })();

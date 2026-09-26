@@ -53,7 +53,7 @@ module.exports.validationPoudreCtrler={
                                                 const {ok,validation}=foundValidation;
                                                 const VALIDATION=validation?validation:{};
                                                 if(foundValidation){
-                                                    return models.ValidationPoudre.update({
+                                                    const newValidation=models.ValidationPoudre.update({
                                                         ok:ok,
                                                         validation:{...VALIDATION,[(Date.now()).toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         },
@@ -61,32 +61,30 @@ module.exports.validationPoudreCtrler={
                                                             where:{id:foundValidation.id}
                                                         }
                                                     )
+                                                    return newValidation;
             
                                                 }else{
-                                                    return models.ValidationPoudre.create({
+                                                    const newValidation=models.ValidationPoudre.create({
                                                         ok:false,
                                                         validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         UtilisateurId:parseInt(UtilisateurId),
                                                         AnalyseId:parseInt(id),
                                                     })
-            
+                                                    return newValidation;
                                                 }
+
                                             })
-                                            .then(function(){
+                                            .then(function(newValidation){
                                                 const msg=action==='isolate'?"a isolé l'analyse "+id:"a injecté l'analyse "+ id;
-                                                            return models.Action.create({
+                                                        models.Action.create({
                                                                 action:msg,
                                                                 UtilisateurId:parseInt(UtilisateurId)
-                                                            })    
-                                                            })
-                                            .then(function(){
+                                                            }) 
+                                                        return newValidation
+                                                        })
+                                            .then(function(newValidation){
                                                 return res.status(200).json({
-                                                    "validation":{
-                                                        ok:false,
-                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
-                                                        UtilisateurId:parseInt(UtilisateurId),
-                                                        AnalyseId:parseInt(id),
-                                                    },
+                                                    "validation":newValidation,
                                                     "code":"green",
                                                     "message":"Action executed successfully"
                                                 })

@@ -51,10 +51,11 @@ module.exports.validationPoudreCtrler={
                                             )
                                             .then(function(foundValidation){
                                                 const {ok,validation}=foundValidation;
+                                                const VALIDATION=validation?validation:{};
                                                 if(foundValidation){
-                                                    return validation && models.ValidationPoudre.update({
+                                                    return models.ValidationPoudre.update({
                                                         ok:ok,
-                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action},...validation},
+                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action},...VALIDATION},
                                                         },
                                                         {
                                                             where:{id:foundValidation.id}

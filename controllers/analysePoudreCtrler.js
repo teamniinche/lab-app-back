@@ -311,10 +311,11 @@ function Update(req,res,foundAnalyse){
                                 )
                                 .then(function(foundValidation){
                                     const {validation}=foundValidation;
+                                    const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                        return validation && models.ValidationPoudre.update({
+                                        return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -341,10 +342,11 @@ function Update(req,res,foundAnalyse){
                                 )
                                 .then(function(foundValidation){
                                     const {validation}=foundValidation;
+                                    const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                        return validation && models.ValidationPoudre.update({
+                                        return models.ValidationPoudre.update({
                                             ok:true,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -760,10 +762,11 @@ module.exports.analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     const {validation}=foundValidation;
+                                    const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                        return validation && models.ValidationPoudre.update({
+                                        return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -790,10 +793,11 @@ module.exports.analysePoudreCtrler={
                                     )
                                     .then(function(foundValidation){
                                         const {validation}=foundValidation;
+                                        const VALIDATION=validation?validation:{};
                                         if(foundValidation){
-                                            return validation && models.ValidationPoudre.update({
+                                            return models.ValidationPoudre.update({
                                                 ok:true,
-                                                validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                                validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                                 },
                                                 {
                                                     where:{id:foundValidation.id}
@@ -881,9 +885,10 @@ module.exports.analysePoudreCtrler={
                                 .then(function(foundValidation){
                                     if(foundValidation){
                                         const {validation}=foundValidation;
-                                        return validation && models.ValidationPoudre.update({
+                                        const VALIDATION=validation?validation:{};
+                                        return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -910,10 +915,11 @@ module.exports.analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     const {validation}=foundValidation;
+                                    const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                        return validation && models.ValidationPoudre.update({
+                                        return models.ValidationPoudre.update({
                                             ok:true,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}

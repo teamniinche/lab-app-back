@@ -224,7 +224,8 @@ function Update(req,res,foundAnalyse){
                     percarbonate,
                     mousses,
                     observations,
-                    UtilisateurId
+                    UtilisateurId,
+                    action
                 }=req.body;
     
             if(UtilisateurId==null){
@@ -309,11 +310,11 @@ function Update(req,res,foundAnalyse){
                                     }
                                 )
                                 .then(function(foundValidation){
+                                    const {validation}=foundValidation;
                                     if(foundValidation){
-                                        return foundValidation.validation!=='Isolated' && models.ValidationPoudre.update({
+                                        return validation && models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:null,
-                                            UtilisateurId:UtilisateurId
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -323,10 +324,32 @@ function Update(req,res,foundAnalyse){
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:"",
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
+
+                                    }
+                                })
+                        }
+                        else{
+                            models.ValidationPoudre.findOne(
+                                    {
+                                        where:{AnalyseId:id},
+                                        attributes:['id','ok','validation']
+                                    }
+                                )
+                                .then(function(foundValidation){
+                                    const {validation}=foundValidation;
+                                    if(foundValidation){
+                                        return validation && models.ValidationPoudre.update({
+                                            ok:true,
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            },
+                                            {
+                                                where:{id:foundValidation.id}
+                                            }
+                                        )
 
                                     }
                                 })
@@ -366,7 +389,7 @@ function Add(req,res,newAnalyse){
                     if(!obsIsNull(obs)){
                         models.ValidationPoudre.create({
                                     ok:false,
-                                    validation:"",
+                                    validation:null,
                                     UtilisateurId:newAnalyse.UtilisateurId,
                                     AnalyseId:createdAnalyse.id,
                                 })
@@ -710,7 +733,7 @@ module.exports.analysePoudreCtrler={
                             percarbonate:willUpdate(parseFloat(percarbonate)||null,analyse.percarbonate),
 
                             mousses:willUpdate(mousses,analyse.mousses),
-                            observations:analyse.observations+" & "+observations,// willUpdate(observations,analyse.observations),
+                            observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
                             // UtilisateurId:analyse.UtilisateurId
                         },
                         {
@@ -728,7 +751,7 @@ module.exports.analysePoudreCtrler={
                 })    
                 })
                 .then(function(){
-                            if(observations!=='RAS'){
+                            if(!obsIsNull(observations)){
                                 models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
@@ -736,11 +759,11 @@ module.exports.analysePoudreCtrler={
                                     }
                                 )
                                 .then(function(foundValidation){
+                                    const {validation}=foundValidation;
                                     if(foundValidation){
-                                        return foundValidation.validation!=='Isolated' && models.ValidationPoudre.update({
+                                        return validation && models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:"",
-                                            UtilisateurId:UtilisateurId
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -750,14 +773,36 @@ module.exports.analysePoudreCtrler={
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:"",
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
 
                                     }
                                 })
-                        }
+                            }
+                            else{
+                                models.ValidationPoudre.findOne(
+                                        {
+                                            where:{AnalyseId:id},
+                                            attributes:['id','ok','validation']
+                                        }
+                                    )
+                                    .then(function(foundValidation){
+                                        const {validation}=foundValidation;
+                                        if(foundValidation){
+                                            return validation && models.ValidationPoudre.update({
+                                                ok:true,
+                                                validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                                },
+                                                {
+                                                    where:{id:foundValidation.id}
+                                                }
+                                            )
+
+                                        }
+                                    })
+                            }
                     })
                 .then(function(){
                     const analyses=allAnalyses(req,res)
@@ -811,7 +856,7 @@ module.exports.analysePoudreCtrler={
                         {
                             nChar:parseFloat(nChar),
                             densite:parseInt(densite),
-                            observations:analyse.observations+" & "+observations,// willUpdate(observations,analyse.observations),
+                            observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
                             // UtilisateurId:analyse.UtilisateurId
                         },
                         {
@@ -826,7 +871,7 @@ module.exports.analysePoudreCtrler={
                 })    
                 })
                 .then(function(){
-                            if(observations!=='RAS'){
+                            if(!obsIsNull(observations)){
                                 models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
@@ -835,10 +880,10 @@ module.exports.analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     if(foundValidation){
-                                        return foundValidation.validation!=='Isolated' && models.ValidationPoudre.update({
+                                        const {validation}=foundValidation;
+                                        return validation && models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:"",
-                                            UtilisateurId:UtilisateurId
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -848,14 +893,36 @@ module.exports.analysePoudreCtrler={
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:"",
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
 
                                     }
                                 })
-                        }
+                            }
+                            else{
+                            models.ValidationPoudre.findOne(
+                                    {
+                                        where:{AnalyseId:id},
+                                        attributes:['id','ok','validation']
+                                    }
+                                )
+                                .then(function(foundValidation){
+                                    const {validation}=foundValidation;
+                                    if(foundValidation){
+                                        return validation && models.ValidationPoudre.update({
+                                            ok:true,
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...validation},
+                                            },
+                                            {
+                                                where:{id:foundValidation.id}
+                                            }
+                                        )
+
+                                    }
+                                })
+                            }
                     })
                 .then(function(){
                     const analyses=allAnalyses(req,res);

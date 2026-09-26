@@ -37,6 +37,57 @@ module.exports.validationPoudreCtrler={
                 return res.status(500).json({"code":"red","message":"validation impossible ! : "+error.message})
             })
         },
+        act:function(req,res){
+            const {id,action,UtilisateurId}=req.body;
+
+            if(!UtilisateurId || !id){
+                return res.status(400).json({"code":"red","message":"il manque des paramètres necessaires ! "});
+            }
+            models.ValidationPoudre.findOne(
+                                                {
+                                                    where:{AnalyseId:id},
+                                                    attributes:['id','ok','validation']
+                                                }
+                                            )
+                                            .then(function(foundValidation){
+                                                const {ok,validation}=foundValidation;
+                                                if(foundValidation){
+                                                    return validation && models.ValidationPoudre.update({
+                                                        ok:ok,
+                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action},...validation},
+                                                        },
+                                                        {
+                                                            where:{id:foundValidation.id}
+                                                        }
+                                                    )
+            
+                                                }else{
+                                                    return models.ValidationPoudre.create({
+                                                        ok:false,
+                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
+                                                        UtilisateurId:parseInt(UtilisateurId),
+                                                        AnalyseId:parseInt(id),
+                                                    })
+            
+                                                }
+                                            })
+                                            .then(function(){
+                                                const msg=action==='isolate'?"a isolé l'analyse "+id:"a injecté l'analyse "+ id;
+                                                            return models.Action.create({
+                                                                action:msg,
+                                                                UtilisateurId:parseInt(UtilisateurId)
+                                                            })    
+                                                            })
+                                            .then(function(){
+                                                return res.status(200).json({
+                                                    "code":"green",
+                                                    "message":"Action executed successfully"
+                                                })
+                                            })
+                                            .catch(function(error){
+                                                return res.status(500).json({"code":"red","message":"action impossible ! : "+error.message})
+                                            })
+        },
     all:function(req,res){
         models.ValidationPoudre.findAll({
             attributes:["id","ok","validation",'updatedAt'],

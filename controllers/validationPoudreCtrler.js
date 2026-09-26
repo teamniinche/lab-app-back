@@ -37,7 +37,7 @@ module.exports.validationPoudreCtrler={
                 return res.status(500).json({"code":"red","message":"validation impossible ! : "+error.message})
             })
         },
-        act:function(req,res){
+    act:function(req,res){
             const {id,action,UtilisateurId}=req.body;
 
             if(!UtilisateurId || !id){

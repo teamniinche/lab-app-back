@@ -7,7 +7,7 @@ exports.router=(function(){
 
     //Users Routes
     validationPoudreRouter.route('/update').put(validationPoudreCtrler.update); // U.pdate    | CRUD operations
-    validationPoudreRouter.route('/action').put(auth,validationPoudreCtrler.act); // U.pdate    | CRUD operations
+    validationPoudreRouter.route('/action').put(auth,validationPoudreCtrler.act); // isolate || inject
 
     validationPoudreRouter.route('/').get(validationPoudreCtrler.all); // get All items
 

@@ -138,7 +138,7 @@ function willUpdate(term1,term2){
     return term;
 }
 
-const allAnalyses= async (req, res)=>{
+export const allAnalyses= async (req, res)=>{
     const startedAt = req.query.startedAt || startedAtDefault;
     const endedAt = req.query.endedAt || endedAtDefault;
     const { startDate, endDate } = dates(startedAt, endedAt);

@@ -1,4 +1,5 @@
 var models=require('../models');
+const {allAnalyses}=require('../controllers/analysePoudreCtrler');
 
 // var io;
 // module.exports.setSocketIoV = function (socketIoInstance) {
@@ -81,10 +82,16 @@ module.exports.validationPoudreCtrler={
                                                                 UtilisateurId:parseInt(UtilisateurId)
                                                             }) 
                                                         return newValidation
-                                                        })
-                                            .then(function(newValidation){
+                                                })
+                                            .then(function(){
+                                                const analyses=allAnalyses(req,res)
+                                                return analyses;
+                                                })
+                                            .then(function(analyses){
+                                            // .then(function(newValidation){
                                                 return res.status(200).json({
-                                                    "validation":newValidation,
+                                                    // "validation":newValidation,
+                                                    "analyses":analyses,
                                                     "code":"green",
                                                     "message":"Action executed successfully"
                                                 })

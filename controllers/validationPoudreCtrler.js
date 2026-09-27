@@ -39,7 +39,8 @@ module.exports.validationPoudreCtrler={
             })
         },
     act:function(req,res){
-            const {id,action,UtilisateurId}=req.body;
+            const {id,action,UtilisateurId,startedAt,endedAt}=req.body;
+            const REQ={query:{started:startedAt,endedAt:endedAt}};
 
             if(!UtilisateurId || !id){
                 return res.status(400).json({"code":"red","message":"il manque des paramètres necessaires ! "});
@@ -84,7 +85,7 @@ module.exports.validationPoudreCtrler={
                                                         return newValidation
                                                 })
                                             .then(function(){
-                                                const analyses=allAnalyses(req,res)
+                                                const analyses=allAnalyses(REQ,res)
                                                 return analyses;
                                                 })
                                             .then(function(analyses){

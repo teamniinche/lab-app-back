@@ -1,6 +1,12 @@
 var models=require('../models');
 const {allAnalyses}=require('../controllers/analysePoudreCtrler');
-
+function isAlready(validation,action){
+        return validation && Object.values(validation || {}).map(v=>v?.action).includes(action);
+    }
+function isToInject(validation){
+        const actions=validation?Object.values(validation || {}).map(v=>v?.action):[];
+        return actions.includes('isolate') && !actions.includes('inject');
+    }
 // var io;
 // module.exports.setSocketIoV = function (socketIoInstance) {
 //     io = socketIoInstance;
@@ -54,8 +60,15 @@ module.exports.validationPoudreCtrler={
                                             .then(function(foundValidation){
                                                 const {ok,validation}=foundValidation;
                                                 const VALIDATION=validation?validation:{};
+                                                
                                                 if(foundValidation){
-                                                    const newValidation=models.ValidationPoudre.update({
+                                                    if(isAlready(validation,action)){
+                                                            return res.status(200).json({
+                                                            "code":"yellow",
+                                                            "message":"Already "+action
+                                                        })
+                                                    }
+                                                    return models.ValidationPoudre.update({
                                                         ok:ok,
                                                         validation:{...VALIDATION,[(Date.now()).toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         },
@@ -63,26 +76,26 @@ module.exports.validationPoudreCtrler={
                                                             where:{id:foundValidation.id}
                                                         }
                                                     )
-                                                    return newValidation;
+                                                    // return newValidation;
             
                                                 }else{
-                                                    const newValidation=models.ValidationPoudre.create({
+                                                    return models.ValidationPoudre.create({
                                                         ok:false,
                                                         validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
                                                         UtilisateurId:parseInt(UtilisateurId),
                                                         AnalyseId:parseInt(id),
                                                     })
-                                                    return newValidation;
+                                                    // return newValidation;
                                                 }
 
                                             })
-                                            .then(function(newValidation){
+                                            .then(function(/*newValidation*/){
                                                 const msg=action==='isolate'?"a isolé l'analyse "+id:"a injecté l'analyse "+ id;
-                                                        models.Action.create({
+                                                    return models.Action.create({
                                                                 action:msg,
                                                                 UtilisateurId:parseInt(UtilisateurId)
                                                             }) 
-                                                        return newValidation
+                                                        // return newValidation
                                                 })
                                             .then(function(){
                                                 const analyses=allAnalyses(REQ,res)

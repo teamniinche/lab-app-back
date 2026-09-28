@@ -153,7 +153,7 @@ const allAnalyses= async (req, res)=>{
                 createdAt: { [Op.between]: [startDate, endDate] }
             },
             attributes:attributes,
-            include: [
+            include:[
                 {
                     model: models.Utilisateur,
                     attributes: ['id', 'fName', 'lName', 'pseudo', 'tel', 'isAdmin']

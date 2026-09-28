@@ -138,7 +138,7 @@ function willUpdate(term1,term2){
     return term;
 }
 
-export const allAnalyses= async (req, res)=>{
+const allAnalyses= async (req, res)=>{
     const startedAt = req.query.startedAt || startedAtDefault;
     const endedAt = req.query.endedAt || endedAtDefault;
     const { startDate, endDate } = dates(startedAt, endedAt);
@@ -1643,5 +1643,6 @@ module.exports.analysePoudreCtrler={
             .catch(function(error){
                 return res.status(500).json({"code":"red","message":"impossible de charger la ressource ! "+error.message})
             })
-        }
+        },
+        allAnalyses:allAnalyses
 }

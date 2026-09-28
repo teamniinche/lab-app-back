@@ -63,9 +63,9 @@ module.exports.validationPoudreCtrler={
                                                 
                                                 if(foundValidation){
                                                     if(isAlready(validation,action)){
-                                                            return res.status(200).json({
+                                                            throw new Error({
                                                             "code":"yellow",
-                                                            "message":"Already "+action
+                                                            "message":" chariot already "+action
                                                         })
                                                     }
                                                     return models.ValidationPoudre.update({
@@ -111,7 +111,8 @@ module.exports.validationPoudreCtrler={
                                                 })
                                             })
                                             .catch(function(error){
-                                                return res.status(500).json({"code":"red","message":"action impossible ! : "+error.message})
+                                                const code=error.code || "red";
+                                                return res.status(500).json({"code":code,"message":"action impossible ! : "+error.message})
                                             })
         },
     all:function(req,res){

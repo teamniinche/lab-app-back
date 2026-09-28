@@ -111,8 +111,8 @@ module.exports.validationPoudreCtrler={
                                                 })
                                             })
                                             .catch(function(error){
-                                                const code=error.message.code || "red";
-                                                const message=error.message.message || error.message;
+                                                const code=error.message?.code || "red";
+                                                const message=error.message?.message || error.message;
                                                 return res.status(500).json({"code":code,"message":"action impossible ! : "+message})
                                             })
         },

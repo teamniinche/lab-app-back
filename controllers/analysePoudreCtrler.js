@@ -424,7 +424,7 @@ function Add(req,res,newAnalyse){
 
 
 
-module.exports.analysePoudreCtrler={
+const analysePoudreCtrler={
     allAnalysesPoudre:async function(req, res){
     const startedAt = req?.query?.startedAt || startedAtDefault;
     const endedAt = req?.query?.endedAt || endedAtDefault;
@@ -1643,6 +1643,7 @@ module.exports.analysePoudreCtrler={
             .catch(function(error){
                 return res.status(500).json({"code":"red","message":"impossible de charger la ressource ! "+error.message})
             })
-        },
-        allAnalyses:allAnalyses
+        }
 }
+
+module.exports={analysePoudreCtrler,allAnalyses};

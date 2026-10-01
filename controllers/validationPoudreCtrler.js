@@ -63,14 +63,11 @@ module.exports.validationPoudreCtrler={
                                                 
                                                 if(foundValidation){
                                                     if(isAlready(validation,action)){
-                                                            throw new Error({
-                                                            "code":"yellow",
-                                                            "message":" chariot already "+action
-                                                        })
+                                                            throw new Error("chariot already "+action)
                                                     }
                                                     return models.ValidationPoudre.update({
                                                         ok:ok,
-                                                        validation:{...VALIDATION,[(Date.now()).toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
+                                                        validation:{...VALIDATION,[(Date.now()).toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action,createdAt:Date.now()}},
                                                         },
                                                         {
                                                             where:{id:foundValidation.id}
@@ -81,7 +78,7 @@ module.exports.validationPoudreCtrler={
                                                 }else{
                                                     return models.ValidationPoudre.create({
                                                         ok:false,
-                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action}},
+                                                        validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:action,createdAt:Date.now()}},
                                                         UtilisateurId:parseInt(UtilisateurId),
                                                         AnalyseId:parseInt(id),
                                                     })
@@ -111,8 +108,7 @@ module.exports.validationPoudreCtrler={
                                                 })
                                             })
                                             .catch(function(error){
-                                                const code=error.message?.code || "red";
-                                                const message=error.message?.message || error.message;
+                                                const code=error.message.includes('already')?"yellow":"red";
                                                 return res.status(500).json({"code":code,"message":"action impossible ! : "+message})
                                             })
         },

@@ -315,7 +315,7 @@ function Update(req,res,foundAnalyse){
                                     if(foundValidation){
                                         return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -325,7 +325,7 @@ function Update(req,res,foundAnalyse){
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
@@ -388,7 +388,7 @@ function Add(req,res,newAnalyse){
             models.AnalysePoudre.create(newAnalyse)
                 .then(function(createdAnalyse){
                     const obs=createdAnalyse?.observations;
-                    if(!obsIsNull(obs)){
+                    if(!obsIsNull(obs)){console.log(obs);
                         models.ValidationPoudre.create({
                                     ok:false,
                                     validation:null,
@@ -397,10 +397,7 @@ function Add(req,res,newAnalyse){
                                 })
                     }
                     return createdAnalyse;
-                }) 
-        // .then(function(creatdAnalyse){
-        //     io.emit("analysePoudreAdded", creatdAnalyse);
-        // })
+                })
         .then(function(crtdAnalyse){
             const analyses=allAnalyses(req,res);
             return {analyses:analyses,createdAnalyse:crtdAnalyse};
@@ -766,7 +763,7 @@ const analysePoudreCtrler={
                                     if(foundValidation){
                                         return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -776,7 +773,7 @@ const analysePoudreCtrler={
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
@@ -797,7 +794,7 @@ const analysePoudreCtrler={
                                         if(foundValidation){
                                             return models.ValidationPoudre.update({
                                                 ok:true,
-                                                validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+                                                validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()},...VALIDATION},
                                                 },
                                                 {
                                                     where:{id:foundValidation.id}
@@ -888,7 +885,7 @@ const analysePoudreCtrler={
                                         const VALIDATION=validation?validation:{};
                                         return models.ValidationPoudre.update({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}
@@ -898,7 +895,7 @@ const analysePoudreCtrler={
                                     }else{
                                         return models.ValidationPoudre.create({
                                             ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'}},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()}},
                                             UtilisateurId:UtilisateurId,
                                             AnalyseId:analyse.id,
                                         })
@@ -919,7 +916,7 @@ const analysePoudreCtrler={
                                     if(foundValidation){
                                         return models.ValidationPoudre.update({
                                             ok:true,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:Date().now()},...VALIDATION},
                                             },
                                             {
                                                 where:{id:foundValidation.id}

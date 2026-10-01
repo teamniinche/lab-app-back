@@ -313,6 +313,7 @@ function Update(req,res,foundAnalyse){
                                     const {validation}=foundValidation;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
+                                        console.log('update');
                                         return models.ValidationPoudre.update({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
@@ -323,6 +324,7 @@ function Update(req,res,foundAnalyse){
                                         )
 
                                     }else{
+                                        console.log('create');
                                         return models.ValidationPoudre.create({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()}},
@@ -389,6 +391,7 @@ function Add(req,res,newAnalyse){
                 .then(function(createdAnalyse){
                     const obs=createdAnalyse?.observations;
                     if(!obsIsNull(obs)){console.log(obs);
+                        console.log('ad create');
                         models.ValidationPoudre.create({
                                     ok:false,
                                     validation:null,

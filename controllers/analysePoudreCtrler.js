@@ -313,7 +313,6 @@ function Update(req,res,foundAnalyse){
                                     const {validation}=foundValidation;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                        console.log('update');
                                         return models.ValidationPoudre.update({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
@@ -324,7 +323,6 @@ function Update(req,res,foundAnalyse){
                                         )
 
                                     }else{
-                                        console.log('create');
                                         return models.ValidationPoudre.create({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()}},
@@ -386,18 +384,16 @@ function Update(req,res,foundAnalyse){
     )// end Promise
     }
 function Add(req,res,newAnalyse){
-     return new Promise((resolve,reject)=>
-            models.AnalysePoudre.create(newAnalyse)
+     return new Promise((resolve,reject)=>models.AnalysePoudre.create(newAnalyse)
                 .then(function(createdAnalyse){
                     const obs=createdAnalyse?.observations;
-                    if(!obsIsNull(obs)){console.log(obs);
-                        console.log('ad create');
-                        models.ValidationPoudre.create({
+                    if(!obsIsNull(obs)){
+                        return models.ValidationPoudre.create({
                                     ok:false,
                                     validation:null,
                                     UtilisateurId:newAnalyse.UtilisateurId,
                                     AnalyseId:createdAnalyse.id,
-                                })
+                                }).then(() => createdAnalyse);
                     }
                     return createdAnalyse;
                 })

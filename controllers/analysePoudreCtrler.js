@@ -200,189 +200,189 @@ const allAnalyses= async (req, res)=>{
     }
 };
 
-function Update(req,res,foundAnalyse){
-                // var id=parseFloat(req.params.id);
-                var id=foundAnalyse?.id;
-                const { 
-                    nChar,
-                    name,
-                    nom,
-                    taches,
-                    parfum,
-                    type,
-                    categorie,
-                    lansa,
-                    format,
-                    matiere_active,
-                    alcanite,
-                    humidite,
-                    gg,
-                    silicate,
-                    sel,
-                    densite,
-                    compression,
-                    percarbonate,
-                    mousses,
-                    observations,
-                    UtilisateurId,
-                    action
-                }=req.body;
+// function Update(req,res,foundAnalyse){
+//                 // var id=parseFloat(req.params.id);
+//                 var id=foundAnalyse?.id;
+//                 const { 
+//                     nChar,
+//                     name,
+//                     nom,
+//                     taches,
+//                     parfum,
+//                     type,
+//                     categorie,
+//                     lansa,
+//                     format,
+//                     matiere_active,
+//                     alcanite,
+//                     humidite,
+//                     gg,
+//                     silicate,
+//                     sel,
+//                     densite,
+//                     compression,
+//                     percarbonate,
+//                     mousses,
+//                     observations,
+//                     UtilisateurId,
+//                     action
+//                 }=req.body;
     
-            if(UtilisateurId==null){
-                    return res.status(400).json({"code":"red","message":"il manque des paramètres necessaires ! "});
-            }
-            if(isNaN(id)){return res.status(400).json({"code":"red","message":"L'ID est nul ou indéfini ! "});}
+//             if(UtilisateurId==null){
+//                     return res.status(400).json({"code":"red","message":"il manque des paramètres necessaires ! "});
+//             }
+//             if(isNaN(id)){return res.status(400).json({"code":"red","message":"L'ID est nul ou indéfini ! "});}
 
-            return new Promise((resolve,reject)=> models.AnalysePoudre.findOne({
-                    attributes:[    "id",
-                                    "nChar",
-                                    "name",
-                                    "taches",
-                                    "parfum",
-                                    "type",
-                                    "categorie",
-                                    "lansa",
-                                    "format",
-                                    "matiere_active",
-                                    "alcanite",
-                                    "humidite",
-                                    "gg",
-                                    "silicate",
-                                    "sel",
-                                    "densite",
-                                    "compression",
-                                    "percarbonate",
-                                    "mousses",
-                                    "observations"
-                                ],
-                    where:{id:id}
-                })
-                .then(function(analyse){
-                    if(analyse){
-                        models.AnalysePoudre.update(
-                        {
-                            nChar:willUpdate(parseFloat(nChar),analyse.nChar),
-                            name:willUpdate(name,analyse.name),
-                            nom:willUpdate(nom,analyse.nom),
-                            taches:willUpdate(taches,analyse.taches),
-                            parfum:willUpdate(parfum,analyse.parfum),
-                            type:willUpdate(type,analyse.type),
-                            categorie:willUpdate(categorie,analyse.categorie),
-                            lansa:willUpdate(lansa,analyse.lansa),
-                            matiere_active:willUpdate(parseFloat(matiere_active),analyse.matiere_active),
-                            format:willUpdate(format,analyse.format),
+//             return new Promise((resolve,reject)=> models.AnalysePoudre.findOne({
+//                     attributes:[    "id",
+//                                     "nChar",
+//                                     "name",
+//                                     "taches",
+//                                     "parfum",
+//                                     "type",
+//                                     "categorie",
+//                                     "lansa",
+//                                     "format",
+//                                     "matiere_active",
+//                                     "alcanite",
+//                                     "humidite",
+//                                     "gg",
+//                                     "silicate",
+//                                     "sel",
+//                                     "densite",
+//                                     "compression",
+//                                     "percarbonate",
+//                                     "mousses",
+//                                     "observations"
+//                                 ],
+//                     where:{id:id}
+//                 })
+//                 .then(function(analyse){
+//                     if(analyse){
+//                         models.AnalysePoudre.update(
+//                         {
+//                             nChar:willUpdate(parseFloat(nChar),analyse.nChar),
+//                             name:willUpdate(name,analyse.name),
+//                             nom:willUpdate(nom,analyse.nom),
+//                             taches:willUpdate(taches,analyse.taches),
+//                             parfum:willUpdate(parfum,analyse.parfum),
+//                             type:willUpdate(type,analyse.type),
+//                             categorie:willUpdate(categorie,analyse.categorie),
+//                             lansa:willUpdate(lansa,analyse.lansa),
+//                             matiere_active:willUpdate(parseFloat(matiere_active),analyse.matiere_active),
+//                             format:willUpdate(format,analyse.format),
 
-                            densite:willUpdate(parseInt(densite)||null,analyse.densite),
-                            alcanite:willUpdate(parseFloat(alcanite)||null,analyse.alcanite),
-                            humidite:willUpdate(parseFloat(humidite)||null,analyse.humidite),
-                            gg:willUpdate(parseFloat(gg)||null,analyse.gg),
-                            sel:willUpdate(parseFloat(sel)||null,analyse.sel),
+//                             densite:willUpdate(parseInt(densite)||null,analyse.densite),
+//                             alcanite:willUpdate(parseFloat(alcanite)||null,analyse.alcanite),
+//                             humidite:willUpdate(parseFloat(humidite)||null,analyse.humidite),
+//                             gg:willUpdate(parseFloat(gg)||null,analyse.gg),
+//                             sel:willUpdate(parseFloat(sel)||null,analyse.sel),
 
-                            silicate:willUpdate(parseFloat(silicate)|| null,analyse.silicate),
-                            compression:willUpdate(parseFloat(compression)|| null,analyse.compression),
+//                             silicate:willUpdate(parseFloat(silicate)|| null,analyse.silicate),
+//                             compression:willUpdate(parseFloat(compression)|| null,analyse.compression),
 
-                            percarbonate:willUpdate(parseFloat(percarbonate)||null,analyse.percarbonate),
+//                             percarbonate:willUpdate(parseFloat(percarbonate)||null,analyse.percarbonate),
 
-                            mousses:willUpdate(mousses,analyse.mousses),
-                            observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
-                            // UtilisateurId:analyse.UtilisateurId
-                        },
-                        {
-                            where:{
-                                id:id
-                            },
-                            returning: true, // 👈 Obligatoire pour PostgreSQL
-                            plain: true 
-                        }) 
-                .then(function(analyseUpdated){
-                // io.emit("analysePoudreUpdated", analyseUpdated[1]); // Emit l'analyse mise à jour
-                models.Action.create({
-                    action:"a mis à jour l'analyse "+id,
-                    UtilisateurId:parseInt(UtilisateurId)
-                })    
-                })
-                .then(function(){
-                            if(!obsIsNull(observations)){
-                                models.ValidationPoudre.findOne(
-                                    {
-                                        where:{AnalyseId:id},
-                                        attributes:['id','ok','validation']
-                                    }
-                                )
-                                .then(function(foundValidation){
-                                    const {validation}=foundValidation;
-                                    const VALIDATION=validation?validation:{};
-                                    if(foundValidation){
-                                        return models.ValidationPoudre.update({
-                                            ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
-                                            },
-                                            {
-                                                where:{id:foundValidation.id}
-                                            }
-                                        )
+//                             mousses:willUpdate(mousses,analyse.mousses),
+//                             observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
+//                             // UtilisateurId:analyse.UtilisateurId
+//                         },
+//                         {
+//                             where:{
+//                                 id:id
+//                             },
+//                             returning: true, // 👈 Obligatoire pour PostgreSQL
+//                             plain: true 
+//                         }) 
+//                 .then(function(analyseUpdated){
+//                 // io.emit("analysePoudreUpdated", analyseUpdated[1]); // Emit l'analyse mise à jour
+//                 models.Action.create({
+//                     action:"a mis à jour l'analyse "+id,
+//                     UtilisateurId:parseInt(UtilisateurId)
+//                 })    
+//                 })
+//                 .then(function(){
+//                             if(!obsIsNull(observations)){
+//                                 models.ValidationPoudre.findOne(
+//                                     {
+//                                         where:{AnalyseId:id},
+//                                         attributes:['id','ok','validation']
+//                                     }
+//                                 )
+//                                 .then(function(foundValidation){
+//                                     const {validation}=foundValidation;
+//                                     const VALIDATION=validation?validation:{};
+//                                     if(foundValidation){
+//                                         return models.ValidationPoudre.update({
+//                                             ok:false,
+//                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
+//                                             },
+//                                             {
+//                                                 where:{id:foundValidation.id}
+//                                             }
+//                                         )
 
-                                    }else{
-                                        return models.ValidationPoudre.create({
-                                            ok:false,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()}},
-                                            UtilisateurId:UtilisateurId,
-                                            AnalyseId:analyse.id,
-                                        })
+//                                     }else{
+//                                         return models.ValidationPoudre.create({
+//                                             ok:false,
+//                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()}},
+//                                             UtilisateurId:UtilisateurId,
+//                                             AnalyseId:analyse.id,
+//                                         })
 
-                                    }
-                                })
-                        }
-                        else{
-                            models.ValidationPoudre.findOne(
-                                    {
-                                        where:{AnalyseId:id},
-                                        attributes:['id','ok','validation']
-                                    }
-                                )
-                                .then(function(foundValidation){
-                                    const {validation}=foundValidation;
-                                    const VALIDATION=validation?validation:{};
-                                    if(foundValidation){
-                                        return models.ValidationPoudre.update({
-                                            ok:true,
-                                            validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
-                                            },
-                                            {
-                                                where:{id:foundValidation.id}
-                                            }
-                                        )
+//                                     }
+//                                 })
+//                         }
+//                         else{
+//                             models.ValidationPoudre.findOne(
+//                                     {
+//                                         where:{AnalyseId:id},
+//                                         attributes:['id','ok','validation']
+//                                     }
+//                                 )
+//                                 .then(function(foundValidation){
+//                                     const {validation}=foundValidation;
+//                                     const VALIDATION=validation?validation:{};
+//                                     if(foundValidation){
+//                                         return models.ValidationPoudre.update({
+//                                             ok:true,
+//                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update'},...VALIDATION},
+//                                             },
+//                                             {
+//                                                 where:{id:foundValidation.id}
+//                                             }
+//                                         )
 
-                                    }
-                                })
-                        }
-                    })
-                .then(function(){
-                    const analyses=allAnalyses(req,res);
-                    return analyses;
-                    })
-                .then(function(analyses){
-                            resolve({
-                                "id":id,
-                                "analyses":analyses,
-                                "code":"green",//✅
-                                'message':"Analyse for id="+id+" updated !"
-                            })
-                        })
-                .catch(function(error){
-                            reject({
-                                "code":"red",//🔴
-                                "message":error.message})
-                    })
-            }else{
-                        reject({
-                            "code":"red",//🔴
-                            "message":"Analyse not found !"
-                            })
-            }
-        }) 
-    )// end Promise
-    }
+//                                     }
+//                                 })
+//                         }
+//                     })
+//                 .then(function(){
+//                     const analyses=allAnalyses(req,res);
+//                     return analyses;
+//                     })
+//                 .then(function(analyses){
+//                             resolve({
+//                                 "id":id,
+//                                 "analyses":analyses,
+//                                 "code":"green",//✅
+//                                 'message':"Analyse for id="+id+" updated !"
+//                             })
+//                         })
+//                 .catch(function(error){
+//                             reject({
+//                                 "code":"red",//🔴
+//                                 "message":error.message})
+//                     })
+//             }else{
+//                         reject({
+//                             "code":"red",//🔴
+//                             "message":"Analyse not found !"
+//                             })
+//             }
+//         }) 
+//     )// end Promise
+//     }
 // function Add(req,res,newAnalyse){
 //      return new Promise((resolve,reject)=>models.AnalysePoudre.create(newAnalyse)
 //                 .then(function(createdAnalyse){
@@ -416,6 +416,139 @@ function Update(req,res,foundAnalyse){
 //         })
 //     )// end Promise
 // }
+async function Update(req, res, foundAnalyse) {
+    const id = foundAnalyse?.id;
+    const { 
+        nChar, name, nom, taches, parfum, type, categorie, lansa, format,
+        matiere_active, alcanite, humidite, gg, silicate, sel, densite,
+        compression, percarbonate, mousses, observations, UtilisateurId, action
+    } = req.body;
+
+    // 1. Validations de sécurité initiales
+    if (UtilisateurId == null) {
+        return res.status(400).json({ "code": "red", "message": "il manque des paramètres necessaires ! " });
+    }
+    if (isNaN(id)) {
+        return res.status(400).json({ "code": "red", "message": "L'ID est nul ou indéfini ! " });
+    }
+
+    try {
+        // 2. Recherche de l'analyse existante
+        const analyse = await models.AnalysePoudre.findOne({
+            attributes: [
+                "id", "nChar", "name", "taches", "parfum", "type", "categorie", "lansa", 
+                "format", "matiere_active", "alcanite", "humidite", "gg", "silicate", 
+                "sel", "densite", "compression", "percarbonate", "mousses", "observations"
+            ],
+            where: { id: id }
+        });
+
+        if (!analyse) {
+            throw new Error("Analyse introuvable en base de données.");
+        }
+
+        // 3. Calcul de la chaîne des observations
+        const nouvellesObservations = obsIsNull(observations) 
+            ? "RAS" 
+            : obsIsNull(analyse.observations) 
+                ? "RAS" 
+                : (analyse.observations.replace(observations, '') + " & " + observations);
+
+        // 4. Mise à jour de l'Analyse Poudre
+        await models.AnalysePoudre.update({
+            nChar: willUpdate(parseFloat(nChar), analyse.nChar),
+            name: willUpdate(name, analyse.name),
+            nom: willUpdate(nom, analyse.nom),
+            taches: willUpdate(taches, analyse.taches),
+            parfum: willUpdate(parfum, analyse.parfum),
+            type: willUpdate(type, analyse.type),
+            categorie: willUpdate(categorie, analyse.categorie),
+            lansa: willUpdate(lansa, analyse.lansa),
+            matiere_active: willUpdate(parseFloat(matiere_active), analyse.matiere_active),
+            format: willUpdate(format, analyse.format),
+            densite: willUpdate(parseInt(densite) || null, analyse.densite),
+            alcanite: willUpdate(parseFloat(alcanite) || null, analyse.alcanite),
+            humidite: willUpdate(parseFloat(humidite) || null, analyse.humidite),
+            gg: willUpdate(parseFloat(gg) || null, analyse.gg),
+            sel: willUpdate(parseFloat(sel) || null, analyse.sel),
+            silicate: willUpdate(parseFloat(silicate) || null, analyse.silicate),
+            compression: willUpdate(parseFloat(compression) || null, analyse.compression),
+            percarbonate: willUpdate(parseFloat(percarbonate) || null, analyse.percarbonate),
+            mousses: willUpdate(mousses, analyse.mousses),
+            observations: nouvellesObservations
+        }, {
+            where: { id: id }
+        });
+
+        // 5. Enregistrement de l'historique de l'action opérateur
+        await models.Action.create({
+            action: "a mis à jour l'analyse " + id,
+            UtilisateurId: parseInt(UtilisateurId)
+        });
+
+        // 6. Gestion dynamique de la Validation Poudre
+        const foundValidation = await models.ValidationPoudre.findOne({
+            where: { AnalyseId: id },
+            attributes: ['id', 'ok', 'validation']
+        });
+
+        const currentValidationData = foundValidation?.validation ? foundValidation.validation : {};
+        const timestampKey = Date.now().toString(); // Clé unique basée sur le timestamp exact
+
+        if (!obsIsNull(observations)) {
+            // Cas A : Il y a des anomalies ou des observations (ok: false)
+            if (foundValidation) {
+                await models.ValidationPoudre.update({
+                    ok: false,
+                    validation: {
+                        [timestampKey]: { UtilisateurId: parseInt(UtilisateurId), action: 'update', createdAt: new Date() },
+                        ...currentValidationData
+                    }
+                }, {
+                    where: { id: foundValidation.id }
+                });
+            } else {
+                await models.ValidationPoudre.create({
+                    ok: false,
+                    validation: {
+                        [timestampKey]: { UtilisateurId: parseInt(UtilisateurId), action: 'update', createdAt: new Date() }
+                    },
+                    UtilisateurId: UtilisateurId,
+                    AnalyseId: analyse.id
+                });
+            }
+        } else {
+            // Cas B : Pas d'observations particulières (ok: true)
+            if (foundValidation) {
+                await models.ValidationPoudre.update({
+                    ok: true,
+                    validation: {
+                        [timestampKey]: { UtilisateurId: parseInt(UtilisateurId), action: 'update', createdAt: new Date() },
+                        ...currentValidationData
+                    }
+                }, {
+                    where: { id: foundValidation.id }
+                });
+            }
+        }
+
+        // 7. Récupération et renvoi de la liste consolidée
+        const analyses = await allAnalyses(req, res);
+        return {
+            analyses: analyses,
+            code: "green",
+            message: "Analyse mise à jour avec succès"
+        };
+
+    } catch (error) {
+        // En cas d'échec d'une des étapes asynchrones, on capture proprement l'erreur
+        throw {
+            code: "red",
+            message: "Impossible de modifier cette analyse ! " + error.message
+        };
+    }
+}
+
 async function Add(req, res, newAnalyse) {
     try {
         // 1. Enregistrement de l'analyse Poudre
@@ -581,110 +714,188 @@ const analysePoudreCtrler={
             return analyse;
         },
     // ================== POST ================================
-    add:function(req,res){
-        const startedAt= req.query.startedAt || startedAtDefault;
-        const endedAt= req.query.endedAt || endedAtDefault;
-        const {startDate,endDate}=dates(startedAt,endedAt);
-    /*
-        req==={
-            alcanite: "10",
-            ​chariot: 1,
-            ​compression: null,
-            categorie:"get"||"extra"||"diam"||"local"
-            ​couleur: "white",
-            ​format: Array(3) [ "80g", "15g", "60g" ],
-            ​gg: "1",
-            ​humidite: "2",
-            ​identifier: "1_1779405884969",
-            ​matiere_active: "15",
-            ​mousses: false,
-            ​name: "Extra 1 sans sel",
-            ​nom: "Madar",
-            ​parfum: "Citron",
-            ​percarbonate: false,
-            ​taches: "blue"
+    // add:function(req,res){
+    //     const startedAt= req.query.startedAt || startedAtDefault;
+    //     const endedAt= req.query.endedAt || endedAtDefault;
+    //     const {startDate,endDate}=dates(startedAt,endedAt);
+    // /*
+    //     req==={
+    //         alcanite: "10",
+    //         ​chariot: 1,
+    //         ​compression: null,
+    //         categorie:"get"||"extra"||"diam"||"local"
+    //         ​couleur: "white",
+    //         ​format: Array(3) [ "80g", "15g", "60g" ],
+    //         ​gg: "1",
+    //         ​humidite: "2",
+    //         ​identifier: "1_1779405884969",
+    //         ​matiere_active: "15",
+    //         ​mousses: false,
+    //         ​name: "Extra 1 sans sel",
+    //         ​nom: "Madar",
+    //         ​parfum: "Citron",
+    //         ​percarbonate: false,
+    //         ​taches: "blue"
+    //     }
+    // ​*/
+    // //params
+    // const {
+    //     nChar,
+    //     identifier,
+    //     name,
+    //     nom,
+    //     taches,
+    //     parfum,
+    //     // type,
+    //     categorie,
+    //     lansa,
+    //     format,
+    //     matiere_active,
+    //     alcanite,
+    //     humidite,
+    //     gg,
+    //     silicate,
+    //     sel,
+    //     densite,
+    //     compression,
+    //     percarbonate,
+    //     mousses,
+    //     observations,
+    //     UtilisateurId
+    //  }=req.body;
+
+    // if(UtilisateurId==null){
+    //     return res.status(422).json({"code":"red","message":"Nom du chimiste est requis !"});
+    // }
+
+    // // var newId;var nwAnalyse;
+    // const newAnalyse={
+    //         nChar:parseInt(nChar),
+    //         identifier:identifier,
+    //         name:name,
+    //         nom:nom,
+    //         taches:taches,
+    //         parfum:parfum,
+    //         type:format!==undefined?'fini':'lansa',
+    //         categorie:categorie,
+    //         lansa:lansa,
+    //         format:format,
+    //         matiere_active:parseFloat(matiere_active) || undefined,
+    //         alcanite:parseFloat(alcanite) || undefined,
+    //         humidite:parseFloat(humidite) || undefined,
+    //         gg:parseFloat(gg) || undefined,
+    //         silicate:parseFloat(silicate) || undefined,
+    //         sel:parseFloat(sel) || undefined,
+    //         densite:parseInt(densite) || undefined,
+    //         compression:parseFloat(compression) || undefined,
+    //         percarbonate:parseFloat(percarbonate) || undefined,
+    //         mousses:mousses,
+    //         observations:observations,
+    //         UtilisateurId:parseInt(UtilisateurId)
+    //     }
+
+    //     models.AnalysePoudre.findOne({
+    //                 attributes:attributes,
+    //                 where:{
+    //                     nChar:nChar,
+    //                     name:name,
+    //                     createdAt: {[Op.between]: [startDate, endDate]}
+    //                 }
+    //             })
+    //     .then(function(foundAnalyse){
+    //         if(foundAnalyse){
+    //             const updated=Update(req,res,foundAnalyse);
+    //             return updated;
+    //         }else{
+    //             const added=Add(req,res,newAnalyse);
+    //             return added;
+    //         }
+    //     })
+    //     .then(function(response){
+    //         return res.status(200).json(response)
+    //     })
+    //     .catch(function(response){
+    //         return res.status(500).json(response)
+    //     })
+    // },
+    add: async function (req, res) {
+    try {
+        const startedAt = req.query.startedAt || startedAtDefault;
+        const endedAt = req.query.endedAt || endedAtDefault;
+        const { startDate, endDate } = dates(startedAt, endedAt);
+
+        const {
+            nChar, identifier, name, nom, taches, parfum, categorie,
+            lansa, format, matiere_active, alcanite, humidite, gg,
+            silicate, sel, densite, compression, percarbonate, mousses,
+            observations, UtilisateurId
+        } = req.body;
+
+        // 1. Validation des paramètres obligatoires
+        if (UtilisateurId == null) {
+            return res.status(422).json({ "code": "red", "message": "Nom du chimiste est requis !" });
         }
-    ​*/
-    //params
-    const {
-        nChar,
-        identifier,
-        name,
-        nom,
-        taches,
-        parfum,
-        // type,
-        categorie,
-        lansa,
-        format,
-        matiere_active,
-        alcanite,
-        humidite,
-        gg,
-        silicate,
-        sel,
-        densite,
-        compression,
-        percarbonate,
-        mousses,
-        observations,
-        UtilisateurId
-     }=req.body;
 
-    if(UtilisateurId==null){
-        return res.status(422).json({"code":"red","message":"Nom du chimiste est requis !"});
-    }
+        // 2. Structuration du nouvel objet d'analyse
+        const newAnalyse = {
+            nChar: parseInt(nChar),
+            identifier: identifier,
+            name: name,
+            nom: nom,
+            taches: taches,
+            parfum: parfum,
+            type: format !== undefined ? 'fini' : 'lansa',
+            categorie: categorie,
+            lansa: lansa,
+            format: format,
+            matiere_active: parseFloat(matiere_active) || undefined,
+            alcanite: parseFloat(alcanite) || undefined,
+            humidite: parseFloat(humidite) || undefined,
+            gg: parseFloat(gg) || undefined,
+            silicate: parseFloat(silicate) || undefined,
+            sel: parseFloat(sel) || undefined,
+            densite: parseInt(densite) || undefined,
+            compression: parseFloat(compression) || undefined,
+            percarbonate: parseFloat(percarbonate) || undefined,
+            mousses: mousses,
+            observations: observations,
+            UtilisateurId: parseInt(UtilisateurId)
+        };
 
-    // var newId;var nwAnalyse;
-    const newAnalyse={
-            nChar:parseInt(nChar),
-            identifier:identifier,
-            name:name,
-            nom:nom,
-            taches:taches,
-            parfum:parfum,
-            type:format!==undefined?'fini':'lansa',
-            categorie:categorie,
-            lansa:lansa,
-            format:format,
-            matiere_active:parseFloat(matiere_active) || undefined,
-            alcanite:parseFloat(alcanite) || undefined,
-            humidite:parseFloat(humidite) || undefined,
-            gg:parseFloat(gg) || undefined,
-            silicate:parseFloat(silicate) || undefined,
-            sel:parseFloat(sel) || undefined,
-            densite:parseInt(densite) || undefined,
-            compression:parseFloat(compression) || undefined,
-            percarbonate:parseFloat(percarbonate) || undefined,
-            mousses:mousses,
-            observations:observations,
-            UtilisateurId:parseInt(UtilisateurId)
-        }
-
-        models.AnalysePoudre.findOne({
-                    attributes:attributes,
-                    where:{
-                        nChar:nChar,
-                        name:name,
-                        createdAt: {[Op.between]: [startDate, endDate]}
-                    }
-                })
-        .then(function(foundAnalyse){
-            if(foundAnalyse){
-                const updated=Update(req,res,foundAnalyse);
-                return updated;
-            }else{
-                const added=Add(req,res,newAnalyse);
-                return added;
+        // 3. Vérification de l'existence d'une analyse similaire sur la plage de date
+        const foundAnalyse = await models.AnalysePoudre.findOne({
+            attributes: attributes, // Assurez-vous que la variable 'attributes' est définie globalement dans ce contrôleur
+            where: {
+                nChar: nChar,
+                name: name,
+                createdAt: { [Op.between]: [startDate, endDate] }
             }
-        })
-        .then(function(response){
-            return res.status(200).json(response)
-        })
-        .catch(function(response){
-            return res.status(500).json(response)
-        })
-    },
+        });
+
+        let result;
+
+        // 4. Aiguillage asynchrone strict (Ajout ou Modification)
+        if (foundAnalyse) {
+            // On attend explicitement la fin de l'exécution de la fonction Update
+            result = await Update(req, res, foundAnalyse);
+        } else {
+            // On attend explicitement la fin de l'exécution de la fonction Add
+            result = await Add(req, res, newAnalyse);
+        }
+
+        // 5. Renvoi de la réponse structurée au client
+        return res.status(200).json(result);
+
+    } catch (error) {
+        
+        // Sécurité anti-crash : évite le 'transport close' du conteneur Docker en capturant proprement la panne
+        return res.status(500).json({
+            "code": "red",
+            "message": "Une erreur interne est survenue lors de l'enregistrement de l'analyse : " + error.message
+        });
+    }
+},
+
 
     // ================== UPDATE ==============================
     update:function(req,res){

@@ -383,38 +383,75 @@ function Update(req,res,foundAnalyse){
         }) 
     )// end Promise
     }
-function Add(req,res,newAnalyse){
-     return new Promise((resolve,reject)=>models.AnalysePoudre.create(newAnalyse)
-                .then(function(createdAnalyse){
-                    const obs=createdAnalyse?.observations;
-                    if(!obsIsNull(obs)){
-                        return models.ValidationPoudre.create({
-                                    ok:false,
-                                    validation:null,
-                                    UtilisateurId:newAnalyse.UtilisateurId,
-                                    AnalyseId:createdAnalyse.id,
-                                }).then(() => createdAnalyse);
-                    }
-                    return createdAnalyse;
-                })
-        .then(function(crtdAnalyse){
-            const analyses=allAnalyses(req,res);
-            return {analyses:analyses,createdAnalyse:crtdAnalyse};
-        })
-        .then(function(data){
-            const {analyses,createdAnalyse}=data;
-            resolve({
-                // "id":data.createdAnalyse.id,
-                "analyses":analyses,
-                "analyse":createdAnalyse,
-                "code":"green",
-                "message":"Analyse created"
-            })
-        })
-        .catch(function(error){
-            reject({"code":"red",analyse:newAnalyse,"message":"impossible d'enregistrer cette analyse ! "+error.message})
-        })
-    )// end Promise
+// function Add(req,res,newAnalyse){
+//      return new Promise((resolve,reject)=>models.AnalysePoudre.create(newAnalyse)
+//                 .then(function(createdAnalyse){
+//                     const obs=createdAnalyse?.observations;
+//                     if(!obsIsNull(obs)){
+//                         return models.ValidationPoudre.create({
+//                                     ok:false,
+//                                     validation:null,
+//                                     UtilisateurId:newAnalyse.UtilisateurId,
+//                                     AnalyseId:createdAnalyse.id,
+//                                 }).then(() => createdAnalyse);
+//                     }
+//                     return createdAnalyse;
+//                 })
+//         .then(function(crtdAnalyse){
+//             const analyses=allAnalyses(req,res);
+//             return {analyses:analyses,createdAnalyse:crtdAnalyse};
+//         })
+//         .then(function(data){
+//             const {analyses,createdAnalyse}=data;
+//             resolve({
+//                 // "id":data.createdAnalyse.id,
+//                 "analyses":analyses,
+//                 "analyse":createdAnalyse,
+//                 "code":"green",
+//                 "message":"Analyse created"
+//             })
+//         })
+//         .catch(function(error){
+//             reject({"code":"red",analyse:newAnalyse,"message":"impossible d'enregistrer cette analyse ! "+error.message})
+//         })
+//     )// end Promise
+// }
+async function Add(req, res, newAnalyse) {
+    try {
+        // 1. Enregistrement de l'analyse Poudre
+        const createdAnalyse = await models.AnalysePoudre.create(newAnalyse);
+        const obs = createdAnalyse?.observations;
+
+        // 2. Enregistrement de la validation (uniquement si observations présentes)
+        if (!obsIsNull(obs)) {
+            console.log('Création de la validation pour les observations:', obs);
+            await models.ValidationPoudre.create({
+                ok: false,
+                validation: null,
+                UtilisateurId: newAnalyse.UtilisateurId,
+                AnalyseId: createdAnalyse.id,
+            });
+        }
+
+        // 3. Récupération de l'historique complet (on AJOUTE 'await' si c'est une requête BDD)
+        const analyses = await allAnalyses(req, res);
+
+        // 4. Le retour automatique (équivalent du resolve)
+        return {
+            "analyses": analyses,
+            "analyse": createdAnalyse,
+            "code": "green",
+            "message": "Analyse created"
+        };
+
+    } catch (error) {
+        // 5. La capture d'erreur (équivalent du reject)
+        throw {
+            "code": "red",
+            "analyse": newAnalyse,
+            "message": "impossible d'enregistrer cette analyse ! " + error.message
+        };
+    }
 }
 
 

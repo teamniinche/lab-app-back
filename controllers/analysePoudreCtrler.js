@@ -537,7 +537,8 @@ async function Update(req, res, foundAnalyse) {
         return {
             analyses: analyses,
             code: "green",
-            message: "Analyse mise à jour avec succès"
+            message: "Analyse mise à jour avec succès",
+            obs:!obsIsNull(observations);
         };
 
     } catch (error) {
@@ -564,6 +565,13 @@ async function Add(req, res, newAnalyse) {
                 UtilisateurId: newAnalyse.UtilisateurId,
                 AnalyseId: createdAnalyse.id,
             });
+        }else{
+            await models.ValidationPoudre.create({
+                ok: true,
+                validation: null,
+                UtilisateurId: newAnalyse.UtilisateurId,
+                AnalyseId: createdAnalyse.id,
+            });
         }
 
         // 3. Récupération de l'historique complet (on AJOUTE 'await' si c'est une requête BDD)
@@ -574,7 +582,8 @@ async function Add(req, res, newAnalyse) {
             "analyses": analyses,
             "analyse": createdAnalyse,
             "code": "green",
-            "message": "Analyse created"
+            "message": "Analyse created",
+            "obs":!obsIsNull(obs)
         };
 
     } catch (error) {

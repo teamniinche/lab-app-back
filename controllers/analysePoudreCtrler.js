@@ -120,6 +120,10 @@ function obsIsNull(obs){
     const obsLenIsNull=obs && Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]).length===0;
     return obsLenIsNull;
 }
+function managedObs(obs){
+    return Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]);
+    ;
+}
 function dates(date1,date2){
     const date3 = new Date(date1); // Date de début
     const date4 = new Date(date2); // Date de fin
@@ -538,7 +542,8 @@ async function Update(req, res, foundAnalyse) {
             analyses: analyses,
             code: "green",
             message: "Analyse mise à jour avec succès",
-            obs:!obsIsNull(observations)
+            obs:!obsIsNull(observations),
+            managedObs:managedObs(obs)
         };
 
     } catch (error) {
@@ -583,7 +588,8 @@ async function Add(req, res, newAnalyse) {
             "analyse": createdAnalyse,
             "code": "green",
             "message": "Analyse created",
-            "obs":!obsIsNull(obs)
+            "obs":!obsIsNull(obs),
+            "managedObs":managedObs(obs)
         };
 
     } catch (error) {

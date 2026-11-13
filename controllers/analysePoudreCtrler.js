@@ -538,7 +538,7 @@ async function Update(req, res, foundAnalyse) {
             analyses: analyses,
             code: "green",
             message: "Analyse mise à jour avec succès",
-            obs:!obsIsNull(observations);
+            obs:(()=>!obsIsNull(observations))();
         };
 
     } catch (error) {
@@ -583,7 +583,7 @@ async function Add(req, res, newAnalyse) {
             "analyse": createdAnalyse,
             "code": "green",
             "message": "Analyse created",
-            "obs":!obsIsNull(obs)
+            "obs":(()=>!obsIsNull(obs))()
         };
 
     } catch (error) {

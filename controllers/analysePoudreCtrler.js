@@ -122,10 +122,6 @@ function obsIsNull(obs){
     const obsLenIsNull=(obsCleaned.length===0);
     return obsLenIsNull;
 }
-function managedObs(obs){
-    return Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]);
-    ;
-}
 function dates(date1,date2){
     const date3 = new Date(date1); // Date de début
     const date4 = new Date(date2); // Date de fin
@@ -456,9 +452,9 @@ async function Update(req, res, foundAnalyse) {
         // 3. Calcul de la chaîne des observations
         const nouvellesObservations = obsIsNull(observations) 
             ? "RAS" 
-            : obsIsNull(analyse.observations) 
+            : (obsIsNull(analyse.observations) 
                 ? "RAS" 
-                : (analyse.observations.replace(observations, '') + " & " + observations);
+                : (analyse.observations.replace(observations, '') + " & " + observations));
 
         // 4. Mise à jour de l'Analyse Poudre
         await models.AnalysePoudre.update({
@@ -501,7 +497,7 @@ async function Update(req, res, foundAnalyse) {
         const currentValidationData = foundValidation?.validation ? foundValidation.validation : {};
         const timestampKey = Date.now().toString(); // Clé unique basée sur le timestamp exact
 
-        if (!obsIsNull(observations)) {
+        if (!obsIsNull(nouvellesObservations)) {
             // Cas A : Il y a des anomalies ou des observations (ok: false)
             if (foundValidation) {
                 await models.ValidationPoudre.update({
@@ -544,8 +540,8 @@ async function Update(req, res, foundAnalyse) {
             analyses: analyses,
             code: "green",
             message: "Analyse mise à jour avec succès",
-            obs:!obsIsNull(observations),
-            managedObs:managedObs(obs)
+            obs:!obsIsNull(nouvellesObservations),
+            managedObs:managedObs(nouvellesObservations)
         };
 
     } catch (error) {
@@ -1118,7 +1114,7 @@ const analysePoudreCtrler={
                         {
                             nChar:parseFloat(nChar),
                             densite:parseInt(densite),
-                            observations:obsIsNull(observations)?"RAS":obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations),// willUpdate(observations,analyse.observations),
+                            observations:obsIsNull(observations)?"RAS":(obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations))// willUpdate(observations,analyse.observations),
                             // UtilisateurId:analyse.UtilisateurId
                         },
                         {

@@ -1101,7 +1101,7 @@ const analysePoudreCtrler={
                 })
                 .then(function(analyse){
                     if(analyse){
-                        models.AnalysePoudre.update(
+                    return models.AnalysePoudre.update(
                         {
                             nChar:parseFloat(nChar),
                             densite:parseInt(densite),
@@ -1115,10 +1115,10 @@ const analysePoudreCtrler={
                         }) 
                 .then(function(analyseUpdated){
                     console.log('analyse updated :',analyseUpdated);
-                models.Action.create({
-                    action:"a mis à jour la densite de l'analyse "+id,
-                    UtilisateurId:parseInt(UtilisateurId)
-                })    
+                    models.Action.create({
+                        action:"a mis à jour la densite de l'analyse "+id,
+                        UtilisateurId:parseInt(UtilisateurId)
+                    })    
                 })
                 .then(function(){
                             if(!obsIsNull(observations)){

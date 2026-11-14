@@ -563,22 +563,19 @@ async function Add(req, res, newAnalyse) {
 
         // 2. Enregistrement de la validation (uniquement si observations présentes)
         if (!obsIsNull(obs)) {
-            console.log('Création de la validation pour les observations:', obs);
+            console.log('Création de la validation pour les observations:', {
+                                                                                "code": "green",
+                                                                                "message": "Analyse created",
+                                                                                "obs":!obsIsNull(obs),
+                                                                                "managedObs":managedObs(obs)
+                                                                            });
             await models.ValidationPoudre.create({
                 ok: false,
                 validation: null,
                 UtilisateurId: newAnalyse.UtilisateurId,
                 AnalyseId: createdAnalyse.id,
             });
-        }else{
-            await models.ValidationPoudre.create({
-                ok: true,
-                validation: null,
-                UtilisateurId: newAnalyse.UtilisateurId,
-                AnalyseId: createdAnalyse.id,
-            });
         }
-
         // 3. Récupération de l'historique complet (on AJOUTE 'await' si c'est une requête BDD)
         const analyses = await allAnalyses(req, res);
 

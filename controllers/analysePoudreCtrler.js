@@ -1113,7 +1113,8 @@ const analysePoudreCtrler={
                                 id:id
                             }
                         }) 
-                .then(function(){
+                .then(function(analyseUpdated){
+                    console.log('analyse updated :',analyseUpdated);
                 models.Action.create({
                     action:"a mis à jour la densite de l'analyse "+id,
                     UtilisateurId:parseInt(UtilisateurId)

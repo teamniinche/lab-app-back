@@ -117,7 +117,9 @@ const Replace=(sj,ar)=>{var SJ=sj;
   return SJ;
 }
 function obsIsNull(obs){
-    const obsLenIsNull=obs && Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]).length===0;
+    const obsExists=obs!=='' && obs!==undefined && obs!==null;
+    const obsCleaned=obsExists?Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]):'';
+    const obsLenIsNull=(obsCleaned.length===0);
     return obsLenIsNull;
 }
 function managedObs(obs){

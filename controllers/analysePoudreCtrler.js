@@ -539,9 +539,7 @@ async function Update(req, res, foundAnalyse) {
         return {
             analyses: analyses,
             code: "green",
-            message: "Analyse mise à jour avec succès",
-            obs:!obsIsNull(nouvellesObservations),
-            managedObs:managedObs(nouvellesObservations)
+            message: "Analyse mise à jour avec succès"
         };
 
     } catch (error) {
@@ -561,12 +559,7 @@ async function Add(req, res, newAnalyse) {
 
         // 2. Enregistrement de la validation (uniquement si observations présentes)
         if (!obsIsNull(obs)) {
-            console.log('Création de la validation pour les observations:', {
-                                                                                "code": "green",
-                                                                                "message": "Analyse created",
-                                                                                "obs":!obsIsNull(obs),
-                                                                                "managedObs":managedObs(obs)
-                                                                            });
+            console.log('Création de la validation pour les observations:', obs);
             await models.ValidationPoudre.create({
                 ok: false,
                 validation: null,
@@ -582,9 +575,7 @@ async function Add(req, res, newAnalyse) {
             "analyses": analyses,
             "analyse": createdAnalyse,
             "code": "green",
-            "message": "Analyse created",
-            "obs":!obsIsNull(obs),
-            "managedObs":managedObs(obs)
+            "message": "Analyse created"
         };
 
     } catch (error) {

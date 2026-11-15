@@ -1121,7 +1121,7 @@ const analysePoudreCtrler={
                 })
                 .then(function(){
                             if(!obsIsNull(observations)){
-                                models.ValidationPoudre.findOne(
+                                const foundValidation=models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
                                         attributes:['id','ok','validation']
@@ -1152,7 +1152,7 @@ const analysePoudreCtrler={
                                 })
                             }
                             else{
-                            models.ValidationPoudre.findOne(
+                                const foundValidation=models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
                                         attributes:['id','ok','validation']
@@ -1162,6 +1162,8 @@ const analysePoudreCtrler={
                                     const {validation}=foundValidation;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
+                                    console.log('Validation found: ',foundValidation);
+
                                         return models.ValidationPoudre.update({
                                             ok:true,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
@@ -1171,6 +1173,8 @@ const analysePoudreCtrler={
                                             }
                                         )
 
+                                    }else{
+                                        console.log('Validation not found.');
                                     }
                                 })
                             }

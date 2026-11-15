@@ -1101,12 +1101,11 @@ const analysePoudreCtrler={
                 })
                 .then(function(analyse){
                     if(analyse){
-                    return models.AnalysePoudre.update(
+                    const analyseUpdated=models.AnalysePoudre.update(
                         {
                             nChar:parseFloat(nChar),
                             densite:parseInt(densite),
                             observations:obsIsNull(observations)?"RAS":(obsIsNull(analyse.observations)?"RAS":(analyse.observations.replace(observations,'')+" & "+observations))// willUpdate(observations,analyse.observations),
-                            // UtilisateurId:analyse.UtilisateurId
                         },
                         {
                             where:{

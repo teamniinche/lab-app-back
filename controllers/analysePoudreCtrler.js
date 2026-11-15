@@ -1120,6 +1120,7 @@ const analysePoudreCtrler={
                     })    
                 })
                 .then(function(){
+                            console.log('!obsIsNull :',!obsIsNull(observations));
                             if(!obsIsNull(observations)){
                                 return models.ValidationPoudre.findOne(
                                     {
@@ -1161,17 +1162,17 @@ const analysePoudreCtrler={
                                     }
                                 )
                                 .then(function(foundValidation){
-                                    const {validation}=foundValidation;
+                                    const {validation}=foundValidation.dataValues;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                    console.log('obs null Validation found: ',foundValidation);
+                                    console.log('obs null Validation found: ',foundValidation.dataValues);
 
                                         return models.ValidationPoudre.update({
                                             ok:true,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
                                             },
                                             {
-                                                where:{id:foundValidation.id}
+                                                where:{id:foundValidation.dataValues.id}
                                             }
                                         )
 
@@ -1187,6 +1188,12 @@ const analysePoudreCtrler={
                     })
                 .then(function(analyses){
                             // io.emit("analyseUpdated", analyse);
+                            console.log('ANALYSES :',{
+                                "id":id,
+                                "analyses":analyses,
+                                "code":"green",//✅
+                                'message':"Analyse for id="+id+" updated !"
+                            });
                             return res.status(200).json({
                                 "id":id,
                                 "analyses":analyses,

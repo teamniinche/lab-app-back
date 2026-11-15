@@ -1112,16 +1112,16 @@ const analysePoudreCtrler={
                                 id:id
                             }
                         }) 
-                .then(function(analyseUpdated){
-                    console.log('analyse updated :',analyseUpdated);
-                    models.Action.create({
+                .then(function([nbLignes, lignesModifiees]){
+                    console.log('analyse updated :',lignesModifiees[0]);
+                    return models.Action.create({
                         action:"a mis à jour la densite de l'analyse "+id,
                         UtilisateurId:parseInt(UtilisateurId)
                     })    
                 })
                 .then(function(){
                             if(!obsIsNull(observations)){
-                                const foundValidation=models.ValidationPoudre.findOne(
+                                return models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
                                         attributes:['id','ok','validation']
@@ -1129,8 +1129,9 @@ const analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     if(foundValidation){
-                                        const {validation}=foundValidation.dataValues;
+                                        const {validation}=foundValidation
                                         const VALIDATION=validation?validation:{};
+                                        console.log('update validationfound :',foundValidation);
                                         return models.ValidationPoudre.update({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
@@ -1141,6 +1142,8 @@ const analysePoudreCtrler={
                                         )
 
                                     }else{
+                                        console.log('create validation not found ');
+
                                         return models.ValidationPoudre.create({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()}},
@@ -1152,29 +1155,29 @@ const analysePoudreCtrler={
                                 })
                             }
                             else{
-                                const foundValidation=models.ValidationPoudre.findOne(
+                                return models.ValidationPoudre.findOne(
                                     {
                                         where:{AnalyseId:id},
                                         attributes:['id','ok','validation']
                                     }
                                 )
                                 .then(function(foundValidation){
-                                    const {validation}=foundValidation.dataValues;
+                                    const {validation}=foundValidation;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                    console.log('Validation found: ',foundValidation.dataValues);
+                                    console.log('obs null Validation found: ',foundValidation);
 
                                         return models.ValidationPoudre.update({
                                             ok:true,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
                                             },
                                             {
-                                                where:{id:foundValidation.dataValues.id}
+                                                where:{id:foundValidation.id}
                                             }
                                         )
 
                                     }else{
-                                        console.log('Validation not found.');
+                                        console.log('obs null Validation not found.');
                                     }
                                 })
                             }

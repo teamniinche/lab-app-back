@@ -1101,7 +1101,7 @@ const analysePoudreCtrler={
                 })
                 .then(function(analyse){
                     if(analyse){
-                    const analyseUpdated=models.AnalysePoudre.update(
+                    return models.AnalysePoudre.update(
                         {
                             nChar:parseFloat(nChar),
                             densite:parseInt(densite),
@@ -1129,7 +1129,7 @@ const analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     if(foundValidation){
-                                        const {validation}=foundValidation;
+                                        const {validation}=foundValidation.dataValues;
                                         const VALIDATION=validation?validation:{};
                                         return models.ValidationPoudre.update({
                                             ok:false,
@@ -1159,17 +1159,17 @@ const analysePoudreCtrler={
                                     }
                                 )
                                 .then(function(foundValidation){
-                                    const {validation}=foundValidation;
+                                    const {validation}=foundValidation.dataValues;
                                     const VALIDATION=validation?validation:{};
                                     if(foundValidation){
-                                    console.log('Validation found: ',foundValidation);
+                                    console.log('Validation found: ',foundValidation.dataValues);
 
                                         return models.ValidationPoudre.update({
                                             ok:true,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
                                             },
                                             {
-                                                where:{id:foundValidation.id}
+                                                where:{id:foundValidation.dataValues.id}
                                             }
                                         )
 

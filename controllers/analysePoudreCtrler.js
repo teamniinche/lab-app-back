@@ -1112,8 +1112,8 @@ const analysePoudreCtrler={
                                 id:id
                             }
                         }) 
-                .then(function([nbLignes, lignesModifiees]){
-                    console.log('analyse updated :',lignesModifiees[0]);
+                .then(function(analyseUpdated){
+                    console.log('analyse updated :',analyseUpdated);
                     return models.Action.create({
                         action:"a mis à jour la densite de l'analyse "+id,
                         UtilisateurId:parseInt(UtilisateurId)

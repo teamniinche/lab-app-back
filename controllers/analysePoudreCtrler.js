@@ -1129,15 +1129,15 @@ const analysePoudreCtrler={
                                 )
                                 .then(function(foundValidation){
                                     if(foundValidation){
-                                        const {validation}=foundValidation
+                                        const {validation}=foundValidation.dataValues;
                                         const VALIDATION=validation?validation:{};
-                                        console.log('update validationfound :',foundValidation);
+                                        console.log('update validation found :',foundValidation.dataValues);
                                         return models.ValidationPoudre.update({
                                             ok:false,
                                             validation:{[Date.now().toString()]:{UtilisateurId:parseInt(UtilisateurId),action:'update',createdAt:new Date()},...VALIDATION},
                                             },
                                             {
-                                                where:{id:foundValidation.id}
+                                                where:{id:foundValidation.dataValues.id}
                                             }
                                         )
                                     }else{

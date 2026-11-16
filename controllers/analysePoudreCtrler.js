@@ -122,6 +122,11 @@ function obsIsNull(obs){
     const obsLenIsNull=(obsCleaned.length===0);
     return obsLenIsNull;
 }
+function obsCleaned(obs){
+    const obsExists=obs!=='' && obs!==undefined && obs!==null;
+    const obsCleand=obsExists?Replace(obs,[['  ',''],[' ',''],['&',''],[' & ',''],['RAS','']]):'';
+    return obsCleand;
+}
 function dates(date1,date2){
     const date3 = new Date(date1); // Date de début
     const date4 = new Date(date2); // Date de fin
@@ -1121,6 +1126,7 @@ const analysePoudreCtrler={
                 })
                 .then(function(){
                                 console.log('!obsIsNull :',!obsIsNull(observations));
+                                console.log('obsNotNull :',obsCleaned(observations));
                             if(!obsIsNull(observations)){
                                 return models.ValidationPoudre.findOne(
                                     {
@@ -1188,12 +1194,6 @@ const analysePoudreCtrler={
                     })
                 .then(function(analyses){
                             // io.emit("analyseUpdated", analyse);
-                            console.log('ANALYSES :',{
-                                "id":id,
-                                "analyses":analyses,
-                                "code":"green",//✅
-                                'message':"Analyse for id="+id+" updated !"
-                            });
                             return res.status(200).json({
                                 "id":id,
                                 "analyses":analyses,
